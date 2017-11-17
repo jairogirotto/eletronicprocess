@@ -4,7 +4,7 @@
 
 void main(void)
 {
-    int valor = 255 ;
+    int valor = 127 ;
     printf("O endereço  da variável  valor e: %p\n",&valor);
     printf("Exibir 0.1234 resulta em %g\n",0.1234);
     printf("Exibir 0.00001234 resulta em %g\n",0.00001234);
