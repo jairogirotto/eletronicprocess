@@ -6,7 +6,8 @@
 #             usando a ferramenta rsync(www.samba.org/rsync/).
 
 # AUTORES: Jairo Girotto, Joner Cyrre Worm- trf4, Rodolfo Luis de Souza - sjrs;
-# REVISION 1.6   COMMENTS IDENTS AND GARBAGE REMOVE BY  jct trf4 
+
+# REVISION 1.6   COMMENTS, IDENTS AND GARBAGE REMOVE BY  jct trf4 
 # REVISION 1.5   Inserido  TNU, nohs 1-4,  WS, CRON, DOWN
 # REVISION 1.2   opção homologa trocado $LPATH - $LPATH_HOMOLOGA - Jairo Girotto TRF4 26/03/2014
 # REVISION 1.1   acrescentada opção de teste) - Jairo Girotto TRF4
@@ -81,35 +82,42 @@
 
 
 # Server consulta em TRF4
-HOST_APPLICRS_CONSULTA=10.1.30.105  # SERVER NO TRF4
+    HOST_APPLICRS_CONSULTA=10.1.30.105  # SERVER NO TRF4
 
 
 # Homologação TRF4
 
-RHOST_HOMOLOGACAO_TRF4=10.1.30.251
-RHOST_HOMOLOGACAO_SIGILO=10.1.3.252
+    RHOST_HOMOLOGACAO_TRF4=10.1.30.251
+    RHOST_HOMOLOGACAO_SIGILO=10.1.3.252
 
 # SERVERS DE SC ///////////////////////////////////////////////////////////////////////////////////////////
 
-        RHOST_APPLICSC1=10.5.3.24
-        RHOST_APPLICSC2=10.5.70.197
-        RHOST_APPLICSC_NOH1=10.5.70.21
-        RHOST_APPLICSC_NOH2=10.5.70.22
-        RHOST_APPLICSC_NOH3=10.5.70.23
-        RHOST_APPLICSC_NOH4=10.5.70.24
-        RHOST_APPLICSC_NOH5=10.5.70.25
-        RHOST_APPLICSC_NOH7=10.5.70.27
-        RHOST_APPLICSC_SELOCNJ=10.5.70.39
-        HOST_APPLICSC_APP=10.5.70.15
+        # nohs deprecated - verify
+
+        RHOST_APPLICSC1='10.5.3.24'
+        RHOST_APPLICSC2='10.5.70.197'
+        
+        # end
+
+       
+
+        RHOST_APPLICSC_NOH1='10.5.70.21'
+        RHOST_APPLICSC_NOH2='10.5.70.22'
+        RHOST_APPLICSC_NOH3='10.5.70.23'
+        RHOST_APPLICSC_NOH4='10.5.70.24'
+        RHOST_APPLICSC_NOH5='10.5.70.25'
+        RHOST_APPLICSC_NOH7='10.5.70.27'
+        RHOST_APPLICSC_SELOCNJ='10.5.70.39'
+        HOST_APPLICSC_APP='10.5.70.15'
 
 
-        RHOST_APPLICSC_WS1=10.5.70.29 # eproc-ws.jfsc.jus.br
-        RHOST_APPLICSC_WS2=10.5.70.30 # eproc-ws2.jfsc.jus.br
+        RHOST_APPLICSC_WS1='10.5.70.29' # eproc-ws.jfsc.jus.br
+        RHOST_APPLICSC_WS2='10.5.70.30' # eproc-ws2.jfsc.jus.br
 
-        RHOST_APPLICSC_DOWN=10.5.70.50 # eproc-down.jfsc.jus.br
+        RHOST_APPLICSC_DOWN='10.5.70.50' # eproc-down.jfsc.jus.br
 
 
-        HOST_APPLICSC_CONSULTA=10.1.30.106  # SERVER NO TRF4
+        HOST_APPLICSC_CONSULTA='10.1.30.106'  # SERVER NO TRF4
 
 # FIM SERVERS SC ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -246,7 +254,7 @@ RHOST_HOMOLOGACAO_SIGILO=10.1.3.252
 
 # PATH ORIGEM DEPLOY 
 
-    LPATH='/dados/eclipse/workspace/eproc2_producao/'   # Path dos arquivos que serão sincronizados
+    LPATH=/dados/eclipse/workspace/eproc2_producao/   # Path dos arquivos que serão sincronizados
     LPATH_HOMOLOGA=/dados/eclipse/workspace/eproc2_homologacao/ # Jairo Girotto em 25/03/2014 - solicitação "juju"
 
 # FIM PATH ORIGEM /////////////////////////////////////////////////////////////////////////////////////////////
@@ -271,13 +279,17 @@ RHOST_HOMOLOGACAO_SIGILO=10.1.3.252
 
 # SETTING FILE LIST  FOR DEPLOY ///////////////////////////////////////////////////////////////////////////////
 
-    FILELIST=/dados/eclipse/workspace/eproc2_producao/fontes_producao/lista_arquivos_producao.txt
+    FILELIST='/dados/eclipse/workspace/eproc2_producao/fontes_producao/lista_arquivos_producao.txt'
 
 # END SETTING FILE LIST  FOR DEPLOY ///////////////////////////////////////////////////////////////////////////
 
-RPATH_APRESENTACAO_2G=/var/www/html/apresenta_2g/
-RPATH_APRESENTACAO_1G=/var/www/html/apresenta_1g/
 
+# PATH DEPLOY APP Apresentação
+
+    RPATH_APRESENTACAO_2G='/var/www/html/apresenta_2g/'
+    RPATH_APRESENTACAO_1G='/var/www/html/apresenta_1g/'
+
+# END PATH
 
 
 
@@ -324,14 +336,13 @@ permissoes_locais() {
 
 }
 
-#permissoes_locais "$LPATH"
+
 
 # webinfra trf4
 LPATH_WEBINFRA=/mnt/webinfra/
-RPATH_WEBINFRA=/usr/local/www/
-RPATH_WEBINFRA_NEW=/srv/www/htdocs/
 
-RPATH_WEBINFRA_NEW_2=/var/www/html/
+
+RPATH_WEBINFRA=/var/www/html/
 
 
 
@@ -429,7 +440,7 @@ erressinque() {
    # echo "Limpando cache servidor: wget $CMD_WGET" >&2
    # wget $CMD_WGET
    # cat /tmp/saida.txt
-#    echo "DESATIVADO"
+   # echo "DESATIVADO"
 }
 
 processa_repo() {
@@ -461,27 +472,27 @@ processa_repo() {
 
           echo "applic RS NOH1 - V2"
           erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  "$RUSER" "$RHOST_APPLICRS_NOH1" "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" "$GROUP"
-          $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH1:$RPATH_WEBINFRA_NEW_2  >> $LOG_FILE
+          $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH1:$RPATH_WEBINFRA  >> $LOG_FILE
 
           
           echo "applic RS NOH2 -  V2"
           erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICRS_NOH2 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-          $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH2:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+          $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH2:$RPATH_WEBINFRA >> $LOG_FILE
 
           
           echo "applic RS NOH3 - V2"
           erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICRS_NOH3 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-          $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH3:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+          $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH3:$RPATH_WEBINFRA >> $LOG_FILE
 
 
            echo "applic RS NOH4 - V2"
           erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICRS_NOH4 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-          $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH4:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+          $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH4:$RPATH_WEBINFRA >> $LOG_FILE
 
 
           echo "applic RS NOH8 - V2"
           erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICRS_NOH8 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-          $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH8:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+          $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH8:$RPATH_WEBINFRA >> $LOG_FILE
 
 
 
@@ -492,104 +503,105 @@ processa_repo() {
 
           echo "applic RS WS1 - V2"
           erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICRS_WS1 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-          $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_WS1:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+          $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_WS1:$RPATH_WEBINFRA >> $LOG_FILE
 
 
           echo "applic RS WS2  - V2"
           erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICRS_WS2 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-          $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_WS2:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+          $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_WS2:$RPATH_WEBINFRA >> $LOG_FILE
 
 
           echo "app ws para consulta publica portal"
 
           erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICRS_WS_CE "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-          $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_WS_CE:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+          $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_WS_CE:$RPATH_WEBINFRA >> $LOG_FILE
 
 
          
          echo "applic RS NOH9 - V2"
          erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICRS_NOH9 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH9:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH9:$RPATH_WEBINFRA >> $LOG_FILE
 
 
          echo "applic RS NOH10 - V2"
          erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICRS_NOH10 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH10:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH10:$RPATH_WEBINFRA >> $LOG_FILE
 
 
          echo "applic RS NOH11 - V2"
          erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICRS_NOH11 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-        $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH11:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+        $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH11:$RPATH_WEBINFRA >> $LOG_FILE
 
 
          
 
          echo "eproc-1g-aplic-noh12.jfrs.jus.br -noh clonado PR em 2015-02-06 - 10.2.30.150 "
          erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICRS_NOH12 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH12:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH12:$RPATH_WEBINFRA >> $LOG_FILE
 
 
 
          echo "eproc-1g-aplic-noh13.jfrs.jus.br -noh clonado PR em 2015-02-06 - 10.2.30.151 "
          erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICRS_NOH13 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH13:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH13:$RPATH_WEBINFRA >> $LOG_FILE
 
          echo "eproc-1g-aplic-noh14.jfrs.jus.br -noh clonado PR em 2015-02-06 - 10.2.30.152 "
          erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICRS_NOH14 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH14:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH14:$RPATH_WEBINFRA >> $LOG_FILE
 
          echo "eproc-1g-aplic-noh15.jfrs.jus.br -noh clonado PR em 2015-02-06 - 10.2.30.153 "
          erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICRS_NOH15 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH15:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH15:$RPATH_WEBINFRA >> $LOG_FILE
 
 
          # noh redhat 7.x e php 5.4.x
 
          echo "eproc-1g-aplic-noh16.jfrs.jus.br -noh clonado PR em 2015-02-06 - 10.2.30.201 "
          erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICRS_NOH16 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH16:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH16:$RPATH_WEBINFRA >> $LOG_FILE
 
          # noh redhat 7.x e php 5.6.x - 20151020
          echo "eproc-1g-aplic-noh17.jfrs.jus.br -noh clonado 20151020 - 10.2.30.201 "
          erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICRS_NOH17 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH17:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_NOH17:$RPATH_WEBINFRA >> $LOG_FILE
 
          echo "applic RS eproc-down - V2 eproc-down.jfrs.jus.br 10.2.30.141"
          erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICRS_DOWN "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_DOWN:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICRS_DOWN:$RPATH_WEBINFRA >> $LOG_FILE
 
          echo "applic RS eproc-down - V2 eproc-1g-crontab.jfrs.jus.br 10.2.30.135"
          erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_EPROCRS_CRONTAB "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_EPROCRS_CRONTAB:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_EPROCRS_CRONTAB:$RPATH_WEBINFRA >> $LOG_FILE
 
          echo "applic RS eproc-selocnj 10.2.30.155"
          erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_EPROCRS_SELOCNJ "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_EPROCRS_SELOCNJ:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_EPROCRS_SELOCNJ:$RPATH_WEBINFRA >> $LOG_FILE
 
           echo "applic RS eproc-auto 10.2.30.160"
           erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_EPROCRS_AUTO "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-          $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_EPROCRS_AUTO:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+          $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_EPROCRS_AUTO:$RPATH_WEBINFRA >> $LOG_FILE
 
          # Server de consulta no trf4 RHOST_EPROC_CRONTAB
          echo "applic RS CONSULTA - SERVER NO TRF4 "
 
          erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $HOST_APPLICRS_CONSULTA "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$HOST_APPLICRS_CONSULTA:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$HOST_APPLICRS_CONSULTA:$RPATH_WEBINFRA >> $LOG_FILE
 
 
          # SERVER APP RHOST_EPROCRS_APP android/ios
 
          erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $HOST_APPLICRS_APP "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$HOST_APPLICRS_APP:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+         $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$HOST_APPLICRS_APP:$RPATH_WEBINFRA >> $LOG_FILE
 
 
 
 
-      echo "******** ATUALIZANDO FONTES APRESENTAÇÃO 1 GRAU *************"
-	  echo "DESATIVADA TEMPORARIAMENTE"
-       #erressinque "$LOGFILERSYNC" "$KEY" "$LPATH" "$RUSER" "$RHOST_APRESENTACAO_1G" "$RPATH_APRESENTACAO_1G" "$LOG_FILE" "$GROUP"
+        echo "******** ATUALIZANDO FONTES APRESENTAÇÃO 1 GRAU *************"
+        echo "DESATIVADA TEMPORARIAMENTE"
 
-       echo   "******** FIM **ATUALIZANDO FONTES RS! *************"
+        # erressinque "$LOGFILERSYNC" "$KEY" "$LPATH" "$RUSER" "$RHOST_APRESENTACAO_1G" "$RPATH_APRESENTACAO_1G" "$LOG_FILE" "$GROUP"
+
+        echo   "******** FIM **ATUALIZANDO FONTES RS! *************"
 
 
 
@@ -607,71 +619,69 @@ processa_repo() {
 
             echo "applic2 SC"     # Crontabs de estat
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICSC2 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" "$GROUP"
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC2:$RPATH_WEBINFRA_NEW_2  >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC2:$RPATH_WEBINFRA  >> $LOG_FILE
 
 
 	   	    echo "applic SC NOH1 - V2"
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  "$RUSER" "$RHOST_APPLICSC_NOH1" "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" "$GROUP"
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_NOH1:$RPATH_WEBINFRA_NEW_2  >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_NOH1:$RPATH_WEBINFRA  >> $LOG_FILE
 
-          # ----
             echo "applic SC NOH2 -  V2"
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICSC_NOH2 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_NOH2:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_NOH2:$RPATH_WEBINFRA >> $LOG_FILE
 
-          # ----
             echo "applic SC NOH3 - V2"
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICSC_NOH3 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_NOH3:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_NOH3:$RPATH_WEBINFRA >> $LOG_FILE
 
             echo "applic SC NOH4 - V2"
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICSC_NOH4 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_NOH4:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_NOH4:$RPATH_WEBINFRA >> $LOG_FILE
 
 
             echo "applic SC NOH5 - V2"
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICSC_NOH5 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_NOH5:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_NOH5:$RPATH_WEBINFRA >> $LOG_FILE
 
 
 
             echo "applic SC SELO CNJ - V2"
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICSC_SELOCNJ "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_SELOCNJ:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_SELOCNJ:$RPATH_WEBINFRA >> $LOG_FILE
 
 
 
             echo "applic SC CONSULTA - SERVER NO TRF4 "
 
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $HOST_APPLICSC_CONSULTA "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$HOST_APPLICSC_CONSULTA:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$HOST_APPLICSC_CONSULTA:$RPATH_WEBINFRA >> $LOG_FILE
 
 
             echo  "applic SC NOH7 - V2"
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICSC_NOH7 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_NOH7:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_NOH7:$RPATH_WEBINFRA >> $LOG_FILE
 
 
 
             echo "applic SC EPROC WS1 V2"
 
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICSC_WS1 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_WS1:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_WS1:$RPATH_WEBINFRA >> $LOG_FILE
 
 	        echo "applic SC EPROC WS2 V2"
 
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICSC_WS2 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_WS2:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_WS2:$RPATH_WEBINFRA >> $LOG_FILE
 
             echo "applic SC EPROC DOWN V2"
 
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICSC_DOWN "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_DOWN:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_DOWN:$RPATH_WEBINFRA >> $LOG_FILE
 
             echo "applic SC EPROC APP android/ios eproc-app.jfsc.jus.br 10.5.70.15 V2"
 
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICSC_APP "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_APP:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICSC_APP:$RPATH_WEBINFRA >> $LOG_FILE
 
 
             echo "******** FIM **ATUALIZANDO FONTES SC! *************"
@@ -696,87 +706,87 @@ processa_repo() {
 
            echo "applic PR NOH1 - V2"
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  "$RUSER" "$RHOST_APPLICPR_NOH1" "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" "$GROUP"
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_NOH1:$RPATH_WEBINFRA_NEW_2  >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_NOH1:$RPATH_WEBINFRA  >> $LOG_FILE
 
             # ----
            echo "applic  PR NOH2 -  V2"
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICPR_NOH2 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_NOH2:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_NOH2:$RPATH_WEBINFRA >> $LOG_FILE
 
            # ----
            echo "applic PR  NOH3 - V2"
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICPR_NOH3 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_NOH3:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_NOH3:$RPATH_WEBINFRA >> $LOG_FILE
 
            echo "applic PR  NOH4 - V2"
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICPR_NOH4 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_NOH4:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_NOH4:$RPATH_WEBINFRA >> $LOG_FILE
 
            # novos NÓS(5,6)  adicionados em 10/05/2012 - jct
            echo "applic PR  NOH5 - V2"
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICPR_NOH5 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_NOH5:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_NOH5:$RPATH_WEBINFRA >> $LOG_FILE
 
            echo "applic PR  NOH6 - V2"
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICPR_NOH6 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_NOH6:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_NOH6:$RPATH_WEBINFRA >> $LOG_FILE
 
  		   echo "applic PR  NOH7 - V2"
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICPR_NOH7 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_NOH7:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_NOH7:$RPATH_WEBINFRA >> $LOG_FILE
 
  		   echo "applic PR  NOH8 - V2"
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICPR_NOH8 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_NOH8:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_NOH8:$RPATH_WEBINFRA >> $LOG_FILE
 
 
            echo "applic PR  NOH9 - V2"
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICPR_NOH9 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_NOH9:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_NOH9:$RPATH_WEBINFRA >> $LOG_FILE
 
            echo "applic PR  NOH10 - V2"
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICPR_NOH10 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_NOH10:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_NOH10:$RPATH_WEBINFRA >> $LOG_FILE
 
 
 
            echo "applic PR  SELOCNJ - V2"
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICPR_SELOCNJ "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_SELOCNJ:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_SELOCNJ:$RPATH_WEBINFRA >> $LOG_FILE
 
 
            # ws - eproc-ws.jfpr.jus.br (1); eproc-ws2.jfpr.jus.br
 
            echo "applic PR  WS 1  - V2"
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICPR_WS1 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_WS1:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_WS1:$RPATH_WEBINFRA >> $LOG_FILE
 
 
            echo "applic PR  WS 2 - V2"
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICPR_WS2 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_WS2:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_WS2:$RPATH_WEBINFRA >> $LOG_FILE
 
 
 
            echo "applic PR  CONSULTA - SERVER NO TRF4 "
 
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $HOST_APPLICPR_CONSULTA "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$HOST_APPLICPR_CONSULTA:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$HOST_APPLICPR_CONSULTA:$RPATH_WEBINFRA >> $LOG_FILE
 
            echo "applic PR  DOWNLOAD- eproc.jfpr.jus.br 10.7.123.30 "
 
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICPR_DOWN "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_DOWN:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_DOWN:$RPATH_WEBINFRA >> $LOG_FILE
 
            echo "applic PR  CRON - eproc.jfpr.jus.br 10.7.123.29 "
 
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICPR_CRON "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_CRON:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_CRON:$RPATH_WEBINFRA >> $LOG_FILE
 
            echo "applic PR  APP  - eproc-app.jfpr.jus.br 10.7.123.70 "
 
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICPR_APP "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_APP:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICPR_APP:$RPATH_WEBINFRA >> $LOG_FILE
 
             ;;
         tnu)
@@ -792,35 +802,35 @@ processa_repo() {
 
             echo "applic TNU NOH1 - V2"
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH" $RUSER $RHOST_APPLICTNU_NOH1 "$NEW_RPATH_PRODUCAO_TNU" "$LOG_FILE" "$GROUP"
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTNU_NOH1:$RPATH_WEBINFRA_NEW_2  >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTNU_NOH1:$RPATH_WEBINFRA  >> $LOG_FILE
 
             echo "applic TNU NOH2 - V2"
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH" $RUSER $RHOST_APPLICTNU_NOH2 "$NEW_RPATH_PRODUCAO_TNU" "$LOG_FILE" "$GROUP"
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTNU_NOH2:$RPATH_WEBINFRA_NEW_2  >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTNU_NOH2:$RPATH_WEBINFRA  >> $LOG_FILE
 
             echo "applic TNU NOH3 - V2"
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH" $RUSER $RHOST_APPLICTNU_NOH3 "$NEW_RPATH_PRODUCAO_TNU" "$LOG_FILE" "$GROUP"
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTNU_NOH3:$RPATH_WEBINFRA_NEW_2  >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTNU_NOH3:$RPATH_WEBINFRA  >> $LOG_FILE
 
             echo "applic TNU NOH4 - V2"
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH" $RUSER $RHOST_APPLICTNU_NOH4 "$NEW_RPATH_PRODUCAO_TNU" "$LOG_FILE" "$GROUP"
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTNU_NOH4:$RPATH_WEBINFRA_NEW_2  >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTNU_NOH4:$RPATH_WEBINFRA  >> $LOG_FILE
 
             echo "applic TNU WS1 - V2"
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH" $RUSER $RHOST_APPLICTNU_WS1 "$NEW_RPATH_PRODUCAO_TNU" "$LOG_FILE" "$GROUP"
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTNU_WS1:$RPATH_WEBINFRA_NEW_2  >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTNU_WS1:$RPATH_WEBINFRA  >> $LOG_FILE
 
             echo "applic TNU DOWN - V2"
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH" $RUSER $RHOST_APPLICTNU_DOWN "$NEW_RPATH_PRODUCAO_TNU" "$LOG_FILE" "$GROUP"
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTNU_DOWN:$RPATH_WEBINFRA_NEW_2  >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTNU_DOWN:$RPATH_WEBINFRA  >> $LOG_FILE
 
             echo "applic TNU CRON - V2"
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH" $RUSER $RHOST_APPLICTNU_CRON "$NEW_RPATH_PRODUCAO_TNU" "$LOG_FILE" "$GROUP"
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTNU_CRON:$RPATH_WEBINFRA_NEW_2  >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTNU_CRON:$RPATH_WEBINFRA  >> $LOG_FILE
 
             echo "applic TNU APP android/ios eproc-tnu-app.trf4.jus.br 10.1.30.124 - V2"
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH" $RUSER $RHOST_APPLICTNU_APP "$NEW_RPATH_PRODUCAO_TNU" "$LOG_FILE" "$GROUP"
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTNU_APP:$RPATH_WEBINFRA_NEW_2  >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTNU_APP:$RPATH_WEBINFRA  >> $LOG_FILE
 
 
 
@@ -845,88 +855,88 @@ processa_repo() {
 
             echo "applic TRF4 NOH1 - V2"
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH" $RUSER $RHOST_APPLICTRF4_NOH1 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" "$GROUP"
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_NOH1:$RPATH_WEBINFRA_NEW_2  >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_NOH1:$RPATH_WEBINFRA  >> $LOG_FILE
 
             # ----
             echo "applic TRF4  NOH2 -  V2"
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICTRF4_NOH2 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" "$GROUP"
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_NOH2:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_NOH2:$RPATH_WEBINFRA >> $LOG_FILE
 
             # ----
             echo "applic TRF4  NOH3 - V2"
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICTRF4_NOH3 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" "$GROUP"
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_NOH3:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_NOH3:$RPATH_WEBINFRA >> $LOG_FILE
 
             echo "applic TRF4  NOH4 - V2"
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICTRF4_NOH4 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" "$GROUP"
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_NOH4:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_NOH4:$RPATH_WEBINFRA >> $LOG_FILE
 
             # rhel 7.0 php 5.4.x
             echo "applic TRF4  NOH5 - V2 rhel 7.1 php 5.4.x "
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICTRF4_NOH5 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" "$GROUP"
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_NOH5:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_NOH5:$RPATH_WEBINFRA >> $LOG_FILE
 
 
             # rhel 7.1 php 5.6.x - jct em 20151020
             echo "applic TRF4  NOH6 - V2 rhel 7.1 php 5.6.x "
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICTRF4_NOH6 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" "$GROUP"
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_NOH6:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_NOH6:$RPATH_WEBINFRA >> $LOG_FILE
 
 
 
             # rhel 7.1 php 5.6.x - jct em 20160623
             echo "applic TRF4  NOH7 - V2 rhel 7.1 php 5.6.x "
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICTRF4_NOH7 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" "$GROUP"
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_NOH7:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_NOH7:$RPATH_WEBINFRA >> $LOG_FILE
 
             # rhel 7.1 php 5.6.x - sjrsrls em 20170419
             echo "applic TRF4  NOH8 - V2 rhel 7.1 php 5.6.x "
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICTRF4_NOH8 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" "$GROUP"
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_NOH8:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_NOH8:$RPATH_WEBINFRA >> $LOG_FILE
 
             # rhel 7.1 php 5.6.x - sjrsrls em 20170419
             echo "applic TRF4  NOH9 - V2 rhel 7.1 php 5.6.x "
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICTRF4_NOH9 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" "$GROUP"
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_NOH9:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_NOH9:$RPATH_WEBINFRA >> $LOG_FILE
 
             # rhel 7.1 php 5.6.x - jbs em 20160726
             echo "applic TRF4  SELO CNJ - V2 rhel 7.1 php 5.6.x "
             erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICTRF4_SELO "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" "$GROUP"
-            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_SELO:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+            $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_SELO:$RPATH_WEBINFRA >> $LOG_FILE
 
 
           echo "applic TRF4  DOWN"
           erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICTRF4_DOWN "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-          $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_DOWN:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+          $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_DOWN:$RPATH_WEBINFRA >> $LOG_FILE
 
 
            echo "applic TRF4  WS"
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICTRF4_WS "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_WS:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_WS:$RPATH_WEBINFRA >> $LOG_FILE
 
 
            # jct -  adicionado em 11/01/2012
            echo "applic TRF4  WS2"
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICTRF4_WS2 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_WS2:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_WS2:$RPATH_WEBINFRA >> $LOG_FILE
 
           # tff -  adicionado em 08/04/2016
            echo "applic TRF4  WS3"
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICTRF4_WS3 "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_WS3:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_WS3:$RPATH_WEBINFRA >> $LOG_FILE
 
 		   echo "applic TRF4  WS CONSULTA"
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICTRF4_WS_CONSULTA "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_WS_CONSULTA:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_WS_CONSULTA:$RPATH_WEBINFRA >> $LOG_FILE
 
            echo "applic TRF4  eproc-down.trf4.jus.br - 10.1.30.115"
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICTRF4_DOWN "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_DOWN:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_DOWN:$RPATH_WEBINFRA >> $LOG_FILE
 
 
            echo "applic TRF4 app android/ios  eproc-app.trf4.jus.br - 10.1.30.123"
            erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICTRF4_APP "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" $GROUP
-           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_APP:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+           $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_APP:$RPATH_WEBINFRA >> $LOG_FILE
 
 
 
@@ -949,13 +959,13 @@ processa_repo() {
 
          echo "******** ATUALIZANDO FONTES APRESENTAÇÃO 1 GRAU ************* (DESABILITADO)"
          #erressinque "$LOGFILERSYNC" "$KEY" "$LPATH" "$SUPERUSER" "$RHOST_APRESENTACAO_1G" "$RPATH_APRESENTACAO_1G" "$LOG_FILE" "$GROUP"
-         #$RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $SUPERUSER@$RHOST_APRESENTACAO_1G:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+         #$RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $SUPERUSER@$RHOST_APRESENTACAO_1G:$RPATH_WEBINFRA >> $LOG_FILE
 
          # apresentacao 2 GRAU
 
          echo "******** ATUALIZANDO FONTES APRESENTAÇÃO 2 GRAU ************* (DESABILITADO)"
          #erressinque "$LOGFILERSYNC" "$KEY" "$LPATH" "$SUPERUSER" "$RHOST_APRESENTACAO_2G" "$RPATH_APRESENTACAO_2G" "$LOG_FILE" "$GROUP"
-         #$RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $SUPERUSER@$RHOST_APRESENTACAO_2G:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+         #$RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $SUPERUSER@$RHOST_APRESENTACAO_2G:$RPATH_WEBINFRA >> $LOG_FILE
 
          ;;
 
@@ -1016,7 +1026,7 @@ processa_repo() {
          RPATH_EPROC_HOMOMOLOGA_PR="/opt/eprocv2/homologa_1g"
 
          erressinque "$LOGFILERSYNC" "$KEY" "$LPATH_HOMOLOGA" $RUSER "$RHOST_EPROC_1G_HML_APLIC1_PR" "$RPATH_EPROC_HOMOMOLOGA_PR" "$LOG_FILE"
-    ###     $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_EPROC_1G_HML_APLIC1_PR:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
+    ###     $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_EPROC_1G_HML_APLIC1_PR:$RPATH_WEBINFRA >> $LOG_FILE
  ;;
      teste)
 
@@ -1039,8 +1049,8 @@ processa_repo() {
           NEW_RPATH_PRODUCAO_2=/var/www/html/eproc2trf4
           echo "TESTANDO PERMISSÕES  "
           erressinque "$LOGFILERSYNC" "$KEY" "$LPATH"  $RUSER $RHOST_APPLICTRF4_PERM "$NEW_RPATH_PRODUCAO_2" "$LOG_FILE" "$GROUP"
-          #$RSYNC -rlptgoD  --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_PERM:$RPATH_WEBINFRA_NEW_2 >> $LOG_FILE
-          erressinque "$LOGFILERSYNC" "$KEY" "$LPATH_WEBINFRA"  $RUSER  $RHOST_APPLICTRF4_PERM "$RPATH_WEBINFRA_NEW_2" "$LOG_FILE" "$GROUP"
+          #$RSYNC -rlptgoD  --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_APPLICTRF4_PERM:$RPATH_WEBINFRA >> $LOG_FILE
+          erressinque "$LOGFILERSYNC" "$KEY" "$LPATH_WEBINFRA"  $RUSER  $RHOST_APPLICTRF4_PERM "$RPATH_WEBINFRA" "$LOG_FILE" "$GROUP"
 
        ;;
 
