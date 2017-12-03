@@ -274,6 +274,7 @@
     then
         LOG_FILE=/var/log/logFontesProdEproc/rsyncprod.`date +%"Y-%m-%d"`.log
     fi
+    
 # END SETTING LOG FILES ///////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -302,7 +303,10 @@ echo "KEEP CALM BREATHE..GET A COFFE AND ENJOY THIS MOMMENT ..SETTING PERMISSION
 
 echo "ATRIBUÍNDO PERMISSÕES ...AGUARDE"
 
-# ACERTA PERMISSÕES Por  enquanto deprecated
+
+
+
+# ACERTA PERMISSÕES LOCAIS ////////////////////////////////////////////////////////////////////////////////////
 
 permissoes_locais() {
 
@@ -336,13 +340,18 @@ permissoes_locais() {
 
 }
 
+# END PERMISSÕES LOCAIS ///////////////////////////////////////////////////////////////////////////////////////
 
 
-# webinfra trf4
-LPATH_WEBINFRA=/mnt/webinfra/
+
+# PATH WEBINFRA LOCAL/REMOTE //////////////////////////////////////////////////////////////////////////////////
+
+    LPATH_WEBINFRA=/mnt/webinfra/
+
+    RPATH_WEBINFRA=/var/www/html/
 
 
-RPATH_WEBINFRA=/var/www/html/
+# END PATH WEBINFRA
 
 
 
@@ -386,62 +395,74 @@ permissoes() {
     $SSH -i "$KEY" $RUSER@$RHOST /usr/bin/find "$RPATH/tools" \-type f \-a -name \"*.sh\" \-exec chmod 0550 {} \\\;
 }
 
-erressinque() {
 
 
 
-    local LOGFILERSYNC=$1; shift
-    local KEY=$1; shift
-    local LPATH=$1; shift
-    local RUSER=$1; shift
-    local RHOST=$1; shift
-    local RPATH=$1; shift
-    local LOG_FILE=$1; shift
-    local RGROUP=$1; shift
-    local RHTTPD_USER=$1; shift
-    local SSH='/usr/bin/ssh'
-    local RSYNC='/usr/bin/rsync'
-#    HTTPD_CONFS='/etc/httpd/conf/httpd.conf /usr/local/apache2/conf/httpd.conf  /etc/apache2/httpd.conf /etc/apache2/uid.conf'
-    local HTTPD_CONFS='/etc/httpd/conf/httpd.conf'
-    case "$MODOTRANSF" in
-	all)
-	      $RSYNC -Cravzp $MODODRYRUN --log-file="$LOGFILERSYNC" --omit-dir-times  --exclude-from='rsyncprod_exclude.txt' --include=*.exe -e "$SSH -i $KEY" "$LPATH" $RUSER@$RHOST:"$RPATH"  >> "$LOG_FILE"
-	      ;;
-	file)
-	      #    para habilitar sinc. via arquivo
-	      $RSYNC -Cravzp $MODODRYRUN --log-file="$LOGFILERSYNC" --omit-dir-times  --exclude-from='rsyncprod_exclude.txt' --delete-excluded --files-from='../fontes_producao/lista_arquivos_producao.txt' --include=*.exe  -e "$SSH -i $KEY" "$LPATH"  $RUSER@$RHOST:"$RPATH"  >> "$LOG_FILE"
-	      ;;
-    esac
+# RSYNC MAIN FUNCTION ///////////////////////////////////////////////////////////////////////////////////////// 
+
+    erressinque() {
 
 
-    if [ -z "$RGROUP" ]; then
-        for HTTPD_CONF in $HTTPD_CONFS
-        do
-            GROUP_CONF=`$SSH -i "$KEY" $RUSER@$RHOST /bin/grep -i ^group "$HTTPD_CONF" 2>/dev/null | /usr/bin/cut -d\  -f2`
-            [ -z "$GROUP_CONF" ] || break
-        done
-    fi
-    RGROUP=${RGROUP:-"$GROUP_CONF"}
-    echo "Grupo: $RGROUP" >&2
-    if [ -z "$RHTTPD_USER" ]; then
-        for HTTPD_CONF in $HTTPD_CONFS
-        do
-            RHTTPD_USER=`$SSH -i "$KEY" $RUSER@$RHOST /bin/grep -i ^user "$HTTPD_CONF" 2>/dev/null | /usr/bin/cut -d\  -f2`
-            [ -z "$RHTTPD_USER" ] || break
-        done
-    fi
-    echo "User: $RHTTPD_USER" >&2
-    # permissoes $KEY $RUSER $RHOST "$RPATH" $RGROUP $RHTTPD_USER
 
-    echo "" > /tmp/saida_wget.txt
-    echo "" > /tmp/saida.txt
-    local PATH_RAIZ=`echo $RPATH|cut -d/ -f5`
-    local CMD_WGET="http://$RHOST/$PATH_RAIZ/manut/limpar_cache.php?strTexto=clear_all -O /tmp/saida.txt -q"
-   # echo "Limpando cache servidor: wget $CMD_WGET" >&2
-   # wget $CMD_WGET
-   # cat /tmp/saida.txt
-   # echo "DESATIVADO"
-}
+        local LOGFILERSYNC=$1; shift
+        local KEY=$1; shift
+        local LPATH=$1; shift
+        local RUSER=$1; shift
+        local RHOST=$1; shift
+        local RPATH=$1; shift
+        local LOG_FILE=$1; shift
+        local RGROUP=$1; shift
+        local RHTTPD_USER=$1; shift
+        local SSH='/usr/bin/ssh'
+        local RSYNC='/usr/bin/rsync'
+        #  HTTPD_CONFS='/etc/httpd/conf/httpd.conf /usr/local/apache2/conf/httpd.conf  /etc/apache2/httpd.conf /etc/apache2/uid.conf'
+        local HTTPD_CONFS='/etc/httpd/conf/httpd.conf'
+        case "$MODOTRANSF" in
+        all)
+            $RSYNC -Cravzp $MODODRYRUN --log-file="$LOGFILERSYNC" --omit-dir-times  --exclude-from='rsyncprod_exclude.txt' --include=*.exe -e "$SSH -i $KEY" "$LPATH" $RUSER@$RHOST:"$RPATH"  >> "$LOG_FILE"
+            ;;
+        file)
+            #    para habilitar sinc. via arquivo
+            $RSYNC -Cravzp $MODODRYRUN --log-file="$LOGFILERSYNC" --omit-dir-times  --exclude-from='rsyncprod_exclude.txt' --delete-excluded --files-from='../fontes_producao/lista_arquivos_producao.txt' --include=*.exe  -e "$SSH -i $KEY" "$LPATH"  $RUSER@$RHOST:"$RPATH"  >> "$LOG_FILE"
+            ;;
+        esac
+
+
+        if [ -z "$RGROUP" ]; then
+            for HTTPD_CONF in $HTTPD_CONFS
+            do
+                GROUP_CONF=`$SSH -i "$KEY" $RUSER@$RHOST /bin/grep -i ^group "$HTTPD_CONF" 2>/dev/null | /usr/bin/cut -d\  -f2`
+                [ -z "$GROUP_CONF" ] || break
+            done
+        fi
+        RGROUP=${RGROUP:-"$GROUP_CONF"}
+        echo "Grupo: $RGROUP" >&2
+        if [ -z "$RHTTPD_USER" ]; then
+            for HTTPD_CONF in $HTTPD_CONFS
+            do
+                RHTTPD_USER=`$SSH -i "$KEY" $RUSER@$RHOST /bin/grep -i ^user "$HTTPD_CONF" 2>/dev/null | /usr/bin/cut -d\  -f2`
+                [ -z "$RHTTPD_USER" ] || break
+            done
+        fi
+        echo "User: $RHTTPD_USER" >&2
+        # permissoes $KEY $RUSER $RHOST "$RPATH" $RGROUP $RHTTPD_USER
+
+        echo "" > /tmp/saida_wget.txt
+        echo "" > /tmp/saida.txt
+        local PATH_RAIZ=`echo $RPATH|cut -d/ -f5`
+        local CMD_WGET="http://$RHOST/$PATH_RAIZ/manut/limpar_cache.php?strTexto=clear_all -O /tmp/saida.txt -q"
+
+        # echo "Limpando cache servidor: wget $CMD_WGET" >&2
+        # wget $CMD_WGET
+        # cat /tmp/saida.txt
+        # echo "DESATIVADO"
+    }
+
+# END RSYNC MAIN FUCNTION //////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 
 processa_repo() {
     data_sinc=`date "+%Y-%m-%d %H:%M"`
@@ -955,7 +976,7 @@ processa_repo() {
 
        apresentacao)
 
-          # apresentacao 1 GRAU
+         # apresentacao 1 GRAU
 
          echo "******** ATUALIZANDO FONTES APRESENTAÇÃO 1 GRAU ************* (DESABILITADO)"
          #erressinque "$LOGFILERSYNC" "$KEY" "$LPATH" "$SUPERUSER" "$RHOST_APRESENTACAO_1G" "$RPATH_APRESENTACAO_1G" "$LOG_FILE" "$GROUP"
@@ -971,44 +992,44 @@ processa_repo() {
 
       homologa)
 
-           echo "ATUALIZANDO ARQUIVO DE CONFIG DE HOMOLOGAÇÃO DO TRF4 - 2º GRAU"
-           yes|cp -pf $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php.homologa2g $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php
+        echo "ATUALIZANDO ARQUIVO DE CONFIG DE HOMOLOGAÇÃO DO TRF4 - 2º GRAU"
+        yes|cp -pf $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php.homologa2g $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php
 
-           echo "ATUALIZANDO FONTES DE HOMOLOGAÇÃO DO TRF4 - 2º GRAU"
-           erressinque "$LOGFILERSYNC" "$KEY" "$LPATH_HOMOLOGA" $RUSER $RHOST_EPROCTRF4_HOMOLOGACAO "$RPATH_EPROCTRF4_HOMOLOGACAO" "$LOG_FILE"
+        echo "ATUALIZANDO FONTES DE HOMOLOGAÇÃO DO TRF4 - 2º GRAU"
+        erressinque "$LOGFILERSYNC" "$KEY" "$LPATH_HOMOLOGA" $RUSER $RHOST_EPROCTRF4_HOMOLOGACAO "$RPATH_EPROCTRF4_HOMOLOGACAO" "$LOG_FILE"
 
-           echo "ATUALIZANDO ARQUIVO DE CONFIG DE HOMOLOGAÇÃO DA TNU"
-           yes|cp -pf $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php.homologatnu $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php
+        echo "ATUALIZANDO ARQUIVO DE CONFIG DE HOMOLOGAÇÃO DA TNU"
+        yes|cp -pf $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php.homologatnu $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php
 
-           echo "ATUALIZANDO FONTES DE HOMOLOGAÇÃO - TNU"
-           RHOST_EPROC_1G_HML_APLIC2_TNU="10.1.30.149"
-           RPATH_EPROC_1G_HML_APLIC=/opt/eprocv2/homologa_tnu
-           erressinque "$LOGFILERSYNC" "$KEY" "$LPATH_HOMOLOGA" $RUSER $RHOST_EPROC_1G_HML_APLIC2_TNU "$RPATH_EPROC_1G_HML_APLIC" "$LOG_FILE"
+        echo "ATUALIZANDO FONTES DE HOMOLOGAÇÃO - TNU"
+        RHOST_EPROC_1G_HML_APLIC2_TNU="10.1.30.149"
+        RPATH_EPROC_1G_HML_APLIC=/opt/eprocv2/homologa_tnu
+        erressinque "$LOGFILERSYNC" "$KEY" "$LPATH_HOMOLOGA" $RUSER $RHOST_EPROC_1G_HML_APLIC2_TNU "$RPATH_EPROC_1G_HML_APLIC" "$LOG_FILE"
 
 
-           echo "ATUALIZANDO ARQUIVO DE CONFIG 1º GRAU RS - NOH01 "
-           yes|cp -pf $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php.homologa1grs $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php
+        echo "ATUALIZANDO ARQUIVO DE CONFIG 1º GRAU RS - NOH01 "
+        yes|cp -pf $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php.homologa1grs $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php
 
-          echo "ATUALIZANDO FONTES DE HOMOLOGAÇÃO -  1º GRAU RS - NOH01 "
-          RHOST_EPROC_1G_HML_APLIC2_RS="10.1.30.155"
-          RPATH_EPROC_1G_HML_APLIC=/opt/eprocv2/homologa_1g
+        echo "ATUALIZANDO FONTES DE HOMOLOGAÇÃO -  1º GRAU RS - NOH01 "
+        RHOST_EPROC_1G_HML_APLIC2_RS="10.1.30.155"
+        RPATH_EPROC_1G_HML_APLIC=/opt/eprocv2/homologa_1g
 
         erressinque "$LOGFILERSYNC" "$KEY" "$LPATH_HOMOLOGA" $RUSER $RHOST_EPROC_1G_HML_APLIC2_RS "$RPATH_EPROC_1G_HML_APLIC" "$LOG_FILE"
 
 
 
-           echo "ATUALIZANDO ARQUIVO DE CONFIG 1º GRAU RS - NOH02 "
-           yes|cp -pf $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php.homologa1grs $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php
+        echo "ATUALIZANDO ARQUIVO DE CONFIG 1º GRAU RS - NOH02 "
+        yes|cp -pf $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php.homologa1grs $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php
 
 		echo "ATUALIZANDO FONTES DE HOMOLOGAÇÃO -  1º GRAU RS - NOH02 "
-          RHOST_EPROC_1G_HML_APLIC3_RS="10.1.30.156"
-          RPATH_EPROC_1G_HML_APLIC=/opt/eprocv2/homologa_1g
+        RHOST_EPROC_1G_HML_APLIC3_RS="10.1.30.156"
+        RPATH_EPROC_1G_HML_APLIC=/opt/eprocv2/homologa_1g
 
-         erressinque "$LOGFILERSYNC" "$KEY" "$LPATH_HOMOLOGA" $RUSER $RHOST_EPROC_1G_HML_APLIC3_RS "$RPATH_EPROC_1G_HML_APLIC" "$LOG_FILE"
+        erressinque "$LOGFILERSYNC" "$KEY" "$LPATH_HOMOLOGA" $RUSER $RHOST_EPROC_1G_HML_APLIC3_RS "$RPATH_EPROC_1G_HML_APLIC" "$LOG_FILE"
 
 
-          RHOST_EPROC_1G_HML_APLIC1_SC=10.1.30.154
-          RPATH_EPROC_HOMOMOLOGA_SC="/opt/eprocv2/homologa_1g"
+        RHOST_EPROC_1G_HML_APLIC1_SC=10.1.30.154
+        RPATH_EPROC_HOMOMOLOGA_SC="/opt/eprocv2/homologa_1g"
 
         echo "ATUALIZANDO ARQUIVO DE CONFIG 1º GRAU RS - NOH01 "
         yes|cp -pf $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php.homologa1gsc $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php
@@ -1017,31 +1038,34 @@ processa_repo() {
          erressinque "$LOGFILERSYNC" "$KEY" "$LPATH_HOMOLOGA" $RUSER "$RHOST_EPROC_1G_HML_APLIC1_SC" "$RPATH_EPROC_HOMOMOLOGA_SC" "$LOG_FILE"
 
 
-         echo "ATUALIZANDO ARQUIVO DE CONFIG  1º GRAU PR "
-           yes|cp -pf $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php.homologa1gpr $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php
+        echo "ATUALIZANDO ARQUIVO DE CONFIG  1º GRAU PR "
+        yes|cp -pf $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php.homologa1gpr $LPATH_HOMOLOGA/config/ConfiguracaoEproc.php
 
-         echo "ATUALIZANDO FONTES DE HOMOLOGAÇÃO -  1º GRAU PR "
+        echo "ATUALIZANDO FONTES DE HOMOLOGAÇÃO -  1º GRAU PR "
 
-         RHOST_EPROC_1G_HML_APLIC1_PR=10.1.30.157
-         RPATH_EPROC_HOMOMOLOGA_PR="/opt/eprocv2/homologa_1g"
+        RHOST_EPROC_1G_HML_APLIC1_PR=10.1.30.157
+        RPATH_EPROC_HOMOMOLOGA_PR="/opt/eprocv2/homologa_1g"
 
          erressinque "$LOGFILERSYNC" "$KEY" "$LPATH_HOMOLOGA" $RUSER "$RHOST_EPROC_1G_HML_APLIC1_PR" "$RPATH_EPROC_HOMOMOLOGA_PR" "$LOG_FILE"
-    ###     $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_EPROC_1G_HML_APLIC1_PR:$RPATH_WEBINFRA >> $LOG_FILE
+         # $RSYNC -Cravzp --log-file=$LOGFILERSYNC -e "$SSH -i $KEY" $LPATH_WEBINFRA  $RUSER@$RHOST_EPROC_1G_HML_APLIC1_PR:$RPATH_WEBINFRA >> $LOG_FILE
+
+
  ;;
      teste)
 
-         echo "ATUALIZANDO FONTES DE TESTES -  1º/2º GRAUS "
+        echo "ATUALIZANDO FONTES DE TESTES -  1º/2º GRAUS "
 
 
-         RHOST_EPROC_1G_TST=10.1.30.42
-         RPATH_EPROC_1G_TST="/var/www/html/teste_1g"
-         erressinque "$LOGFILERSYNC" "$KEY" "$LPATH_HOMOLOGA" $RUSER "$RHOST_EPROC_1G_TST" "$RPATH_EPROC_1G_TST" "$LOG_FILE"
-         ## WebInfra mapeada para infra de desenv
+        RHOST_EPROC_1G_TST=10.1.30.42
+        RPATH_EPROC_1G_TST="/var/www/html/teste_1g"
+        erressinque "$LOGFILERSYNC" "$KEY" "$LPATH_HOMOLOGA" $RUSER "$RHOST_EPROC_1G_TST" "$RPATH_EPROC_1G_TST" "$LOG_FILE"
+        # WebInfra mapeada para infra de desenv
 
-         RHOST_EPROC_2G_TST=10.1.30.41
-         RPATH_EPROC_2G_TST="/var/www/html/teste_2g"
-         erressinque "$LOGFILERSYNC" "$KEY" "$LPATH_HOMOLOGA" $RUSER "$RHOST_EPROC_2G_TST" "$RPATH_EPROC_2G_TST" "$LOG_FILE"
-         ## WebInfra mapeada para infra de desenv
+        RHOST_EPROC_2G_TST=10.1.30.41
+        RPATH_EPROC_2G_TST="/var/www/html/teste_2g"
+        erressinque "$LOGFILERSYNC" "$KEY" "$LPATH_HOMOLOGA" $RUSER "$RHOST_EPROC_2G_TST" "$RPATH_EPROC_2G_TST" "$LOG_FILE"
+        # WebInfra mapeada para infra de desenv
+
       ;;
 
       permissao)
@@ -1061,6 +1085,10 @@ processa_repo() {
     echo "********************************************************************************************************************************" >> $LOG_FILE
 }
 
+
+# USAGE ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 lista_usage() {
     /bin/cat <<_USAGE_EOF_
 Usage:
@@ -1078,6 +1106,11 @@ Usage:
 _USAGE_EOF_
 
 }
+
+
+# END USAGE
+
+
 
 MODOTRANSF='' # modo de transferencia opcao "-o"
 
