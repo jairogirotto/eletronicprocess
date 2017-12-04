@@ -2,3 +2,4 @@
 http://www.vogella.com/tutorials/Git/article.html
 https://www.atlassian.com/git/tutorials
 https://www.linuxnix.com/suid-set-suid-linuxunix/
+http://rogerdudler.github.io/git-guide/index.pt_BR.html
